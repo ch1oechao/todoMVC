@@ -1,0 +1,7 @@
+{
+  "name": "todo-with-angular",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
