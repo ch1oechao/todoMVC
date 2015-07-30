@@ -3,9 +3,47 @@
         <span><i class="fa fa-archive fa-fw"></i>所有任务</span>
         <span id="todo-total-count"></span>
     </p>
+    <!-- addPanel -->
+    <div class="add-cate-panel" ng-show="addPanelVisible">
+        <h3><i class="fa fa-folder fa-fw"></i>新增分类</h3>
+        <ul>
+            <li>
+                <label for="add-cate-main">选择主分类：</label>
+                <select id="add-cate-main">
+                    <option value="null">新增主分类</option>
+                    <option ng-repeat="cates in cateList" ng-bind="cates.category" value="{{cates.category}}"></option>
+                </select>
+            </li>
+            <li>
+                <label for="add-cate-name">新分类名称：</label>
+                <input type="text" id="add-cate-name">
+            </li>
+        </ul>
+        <div class="add-cate-btn">
+            <span ng-click="hideAddPanel($event)"><i class="fa fa-meh-o"></i>取消</span>
+            <span><i class="fa fa-smile-o"></i>确认</span>
+        </div>
+    </div>
+    <!-- 分类内容 -->
     <div class="todo-category-detail">
         <span><i class="fa fa-folder fa-fw"></i>分类列表</span>
-        <ul class="todo-category-list"></ul>
+        <ul class="todo-category-list">
+          <li ng-repeat="cates in cateList" data-cate-id="{{cates.category}}">
+            <i class="fa fa-folder-open fa-fw"></i>
+            <span ng-bind="cates.category"></span>
+            <span class="remove-cate">
+              <i class="fa fa-trash-o"></i>
+            </span>
+            <ul class="todo-task-list">
+              <li ng-repeat="lists in listList" data-list-id="{{lists.taskList}}">
+                <i class="fa fa-file-o fa-fw"></i>
+                <span ng-bind="lists.taskList"></span>
+                <i class="fa fa-trash-o"></i>
+              </li>
+            </ul>
+          </li>
+        </ul>
     </div>
-    <a id="todo-add-category"><i class="fa fa-plus fa-fw"></i>新增分类</a>
+    <a id="todo-add-category" ng-click="showAddPanel($event)"><i class="fa fa-plus fa-fw"></i>新增分类</a>
+
 </section>

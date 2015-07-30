@@ -136,7 +136,7 @@ header .todo-title {
   display: block;
   margin: 4px 0;
   padding: 2px 3px;
-  width: 100%;
+  width: 92%;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -331,33 +331,32 @@ header .todo-title {
 }
 /*addCatePanel*/
 .add-cate-panel {
-  display: none;
-  width: 400px;
+  width: 20%;
+  min-width: 250px;
   height: 180px;
   padding: 10px;
   z-index: 999;
-  border-radius: 15px;
-  background-color: #9bb2d1;
-  box-shadow: 2px 2px 5px #333;
 }
 .add-cate-panel h3 {
-  text-align: center;
+  text-align: left;
   font-weight: 600;
-  font-size: 1.4em;
-  line-height: 2em;
+  font-size: 1em;
+  line-height: 1em;
   color: #294b7c;
 }
 .add-cate-panel ul {
   margin-top: 10px;
-  margin-left: 60px;
+  margin-left: 12%;
 }
 .add-cate-panel li {
   padding: 5px;
 }
 .add-cate-panel label {
-  display: inline;
+  display: inline-block;
   width: 100px;
   margin-right: 15px;
+  font-size: .8em;
+  margin-bottom: 5px;
 }
 .add-cate-panel select {
   height: 20px;
@@ -375,15 +374,16 @@ header .todo-title {
 }
 .add-cate-panel .add-cate-btn {
   margin-top: 18px;
-  margin-left: 28%;
+  margin-left: 10%;
 }
 .add-cate-panel .add-cate-btn > span {
   display: inline-block;
-  width: 75px;
-  height: 27px;
+  width: 72px;
+  height: 25px;
   margin: 0 5px;
-  line-height: 27px;
+  line-height: 25px;
   text-align: center;
+  font-size: .8em;
   color: #ffffff;
   border-radius: 3px;
   background-color: #294b7c;

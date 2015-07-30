@@ -1,24 +1,24 @@
 <section class="todo-spec" ng-controller="TaskController">
-    <form name="taskForm" id="todo-form">
+    <form name="taskForm">
         <div class="todo-spec-title">
             <label><i class="fa fa-flag"></i></label>
-            <input type="text" id="todo-task-title" placeholder="在这里输入标题" display="none">
-            <span id="todo-default-title"></span>
+            <input type="text" ng-show="editState" placeholder="请在这里输入标题" value="{{curTask.title}}">
+            <span ng-show="viewState" ng-bind="curTask.title"></span>
         <span class="todo-spec-edit">
-            <i class="fa fa-check fa-2x" style="display: none"></i>
-            <i class="fa fa-undo fa-2x"  style="display: none"></i>
-            <i class="fa fa-pencil-square-o fa-2x"></i>
-            <i class="fa fa-check-square-o fa-2x"></i>
+            <i class="fa fa-check fa-2x" ng-show="editState"></i>
+            <i class="fa fa-undo fa-2x"  ng-show="editState" ng-click="viewTask($event)"></i>
+            <i class="fa fa-pencil-square-o fa-2x" ng-show="viewState" ng-click="editTask($event)"></i>
+            <i class="fa fa-check-square-o fa-2x" ng-show="viewState"></i>
         </span>
         </div>
         <div class="todo-spec-time">
             <label><i class="fa fa-calendar"></i></label>
-            <input id="todo-task-time" type="date" style="display: none">
-            <span id="todo-default-time"></span>
+            <input ng-show="editState" type="date" value="{{curTask.time | date: 'yyyy-MM-dd'}}">
+            <span ng-show="viewState" ng-bind="curTask.time | date: 'yyyy-MM-dd'"></span>
         </div>
         <div class="todo-spec-content">
-            <textarea id="todo-task-content" placeholder="在这里输入内容" style="display: none"></textarea>
-            <p id="todo-default-content"></p>
+            <textarea ng-show="editState" placeholder="在这里输入内容" ng-bind="curTask.content"></textarea>
+            <p ng-show="viewState" ng-bind="curTask.content"></p>
         </div>
     </form>
 </section>
