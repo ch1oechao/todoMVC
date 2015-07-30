@@ -1,0 +1,24 @@
+<section class="todo-spec" ng-controller="TaskController">
+    <form name="taskForm" id="todo-form">
+        <div class="todo-spec-title">
+            <label><i class="fa fa-flag"></i></label>
+            <input type="text" id="todo-task-title" placeholder="在这里输入标题" display="none">
+            <span id="todo-default-title"></span>
+        <span class="todo-spec-edit">
+            <i class="fa fa-check fa-2x" style="display: none"></i>
+            <i class="fa fa-undo fa-2x"  style="display: none"></i>
+            <i class="fa fa-pencil-square-o fa-2x"></i>
+            <i class="fa fa-check-square-o fa-2x"></i>
+        </span>
+        </div>
+        <div class="todo-spec-time">
+            <label><i class="fa fa-calendar"></i></label>
+            <input id="todo-task-time" type="date" style="display: none">
+            <span id="todo-default-time"></span>
+        </div>
+        <div class="todo-spec-content">
+            <textarea id="todo-task-content" placeholder="在这里输入内容" style="display: none"></textarea>
+            <p id="todo-default-content"></p>
+        </div>
+    </form>
+</section>

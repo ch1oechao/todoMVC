@@ -4,6 +4,9 @@
   padding: 0;
   list-style: none;
 }
+section {
+  display: block;
+}
 html,
 body {
   height: 100%;
@@ -18,11 +21,7 @@ body {
   line-height: 45px;
   font-size: 1.3em;
 }
-/*变量*/
-/*背景颜色*/
-/*字体颜色*/
-/*模块*/
-/*header*/
+
 header {
   position: relative;
   display: block;
@@ -45,6 +44,11 @@ header .todo-title {
   margin-left: 90px;
   font-size: 1.8em;
 }
+/*fix angular-bug*/
+.ng-scope {
+  height: 100%;
+}
+
 /*todo_container*/
 .todo-container {
   position: relative;
@@ -69,7 +73,7 @@ header .todo-title {
   bottom: 0;
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   color: #ffffff;
   background-color: #7690b7;
@@ -185,7 +189,7 @@ header .todo-title {
   bottom: 0;
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   color: #ffffff;
   background-color: #7690b7;

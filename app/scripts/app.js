@@ -1,17 +1,13 @@
-define(['angular', 'angular-route'], function(angular) {
-  return angular.module('todoapp', ['ngRoute'])
+var todo = angular.module('todoApp', ['ngRoute'])
            .config(function ($routeProvider) {
-             'use strict';
-             var routeConfig = {
-               controller: 'controllers',
-               templateUrl: 'index.html'
-             };
+             'use strict'
 
              $routeProvider
-               .when('/', routeConfig)
-               .when('/:status', routeConfig)
+               .when('/', {
+                 templateUrl: 'views/main.html',
+                 controller: 'MainController',
+               })
                .otherwise({
                  redirectTo: '/'
                });
            });
-})
