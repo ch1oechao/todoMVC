@@ -1,8 +1,9 @@
 todo.controller('TaskController', ['$scope', 'storageService', function($scope, storageService) {
     'use strict'
     //TODO
+    $scope.curId = 0;
     $scope.taskList = storageService.getData('tasks');
-    $scope.curTask = $scope.taskList[0];
+    $scope.curTask = $scope.taskList[$scope.curId];
 
     $scope.editState = false;
     $scope.viewState = true;
@@ -15,5 +16,5 @@ todo.controller('TaskController', ['$scope', 'storageService', function($scope, 
       $scope.editState = false;
       $scope.viewState = true;
     }
-    
+
 }]);

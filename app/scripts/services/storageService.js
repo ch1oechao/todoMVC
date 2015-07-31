@@ -1,69 +1,89 @@
 todo.factory('storageService', function(){
   'use strict'
 
-  var Category = function(obj) {
-      this.category = obj.category;
+  var todoService = {};
 
-      return {category: this.category};
+  todoService.getObj = function(arr, prop, val) {
+    for (var i = 0, len = arr.length; i < len; i++) {
+      if (arr[i][prop] === val) {
+        return arr[i];
+      }
+    }
+  }
+  todoService.getPos = function(key, prop, val) {
+    try{
+        if (window.localStorage) {
+            var storage = window.localStorage;
+            if (storage.getItem(key)) {
+              var arr = JSON.parse(storage.getItem(key));
+              for (var i = 0, len = arr.length; i < len; i++) {
+                if (arr[i][prop] === val[prop]) {
+                  return i;
+                }
+              }
+              return false;
+            }
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+  };
+  todoService.isExist = function(key, prop, val) {
+    try{
+        if (window.localStorage) {
+            var storage = window.localStorage;
+            if (storage.getItem(key)) {
+              var arr = JSON.parse(storage.getItem(key));
+              for (var i = 0, len = arr.length; i < len; i++) {
+                if (arr[i][prop] === val[prop]) {
+                  return true;
+                }
+              }
+              return false;
+            }
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
   };
 
-  Category.prototype = {
+  todoService.todoData = (function(){
+    //创建默认分类、默认列表、默认任务对象
+    var defaultCate = {
       category : "默认分类"
-  };
-
-  var TaskList = function(obj) {
-      this.category = obj.category;
-      this.taskList = obj.taskList;
-
-      return {category: this.category, taskList: this.taskList};
-  };
-
-  TaskList.prototype = {
-      category : Category.prototype.category,
+    };
+    var defaultList = {
+      category : defaultCate.category,
       taskList : "欢迎使用ToDo"
-  };
-
-  var TaskDetail = function(obj) {
-      this.id = 0;
-      this.cateList = obj.cateList;
-      this.title = obj.title;
-      this.time = obj.time;
-      this.content = obj.content;
-      this.isDone = obj.isDone;
-
-      return {
-          id: this.id,
-          cateList: this.cateList,
-          title: this.title,
-          time: this.time,
-          content: this.content,
-          isDone: this.isDone
-      };
-  };
-
-  TaskDetail.prototype = {
+    };
+    var defaultDetail = {
       id: 0,
-      cateList: TaskList.prototype,
+      category : defaultCate.category,
+      taskList : defaultList.taskList,
       title: "Welcome to ToDo",
       time: new Date(2015, 0, 1),
       content: 'Nice to meet U !  欢迎使用 ToDo 应用 ~ (๑•̀ㅂ•́)و✧',
       isDone: true
-  };
+    };
 
-  var todoData = (function(){
-    //创建默认分类、默认列表、默认任务对象
-    var defaultCate = Category.prototype;
-    var defaultList = TaskList.prototype;
-    var defaultDetail = TaskDetail.prototype;
+    var task1 = {
+      id: 1,
+      category : defaultCate.category,
+      taskList : defaultList.taskList,
+      title: "ToDo Test",
+      time: new Date(2015, 1, 1),
+      content: 'For Test !!!',
+      isDone: true
+    }
 
     return {
       cates: [defaultCate],
       lists: [defaultList],
-      tasks: [defaultDetail]
+      tasks: [defaultDetail, task1]
     }
   })();
-
-  var todoService = {};
 
   todoService.getData = function(key){
     try{
@@ -74,15 +94,15 @@ todo.factory('storageService', function(){
             if (!storage.getItem(key)) {
                 switch (key){
                     case "cates":
-                        storage.setItem("cates", JSON.stringify(todoData.cates));
+                        storage.setItem("cates", JSON.stringify(this.todoData.cates));
                         return JSON.parse(storage.getItem("cates"));
                         break;
                     case "lists":
-                        storage.setItem("lists", JSON.stringify(todoData.lists));
+                        storage.setItem("lists", JSON.stringify(this.todoData.lists));
                         return JSON.parse(storage.getItem("lists"));
                         break;
                     case "tasks":
-                        storage.setItem("tasks", JSON.stringify(todoData.tasks));
+                        storage.setItem("tasks", JSON.stringify(this.todoData.tasks));
                         return JSON.parse(storage.getItem("tasks"));
                 }
             }
@@ -102,13 +122,23 @@ todo.factory('storageService', function(){
               if (storage.getItem(key)) {
                   switch (key) {
                       case "cates":
-                          storage.setItem("cates", JSON.stringify(val));
+                          if (!todoService.isExist(key, 'category', val)) {
+                            this.todoData.cates.push(val);
+                            storage.setItem("cates", JSON.stringify(this.todoData.cates));
+                          }
                           break;
                       case "lists":
-                          storage.setItem("lists", JSON.stringify(val));
+                          if (!todoService.isExist(key, 'taskList', val)) {
+                            this.todoData.lists.push(val);
+                            storage.setItem("lists", JSON.stringify(this.todoData.lists));
+                          }
                           break;
                       case "tasks":
-                          storage.setItem("tasks", JSON.stringify(val));
+                          if (!todoService.isExist(key, 'title', val)) {
+                            this.todoData.tasks.push(val);
+                            storage.setItem("tasks", JSON.stringify(this.todoData.tasks));
+                          }
+                          break;
                   }
               }
           }
@@ -117,15 +147,15 @@ todo.factory('storageService', function(){
           console.log(e);
       }
   };
-
-  todoService.updateData = function(cates, lists, tasks) {
-      //更新本地分类数据
-      todoService.setData("cates", cates);
-      //更新本地列表数据
-      todoService.setData("lists", lists);
-      //更新本地任务数据
-      todoService.setData("tasks", tasks);
-  };
+  //
+  // todoService.updateData = function(cates, lists, tasks) {
+  //     //更新本地分类数据
+  //     todoService.setData("cates", cates);
+  //     //更新本地列表数据
+  //     todoService.setData("lists", lists);
+  //     //更新本地任务数据
+  //     todoService.setData("tasks", tasks);
+  // };
 
   return todoService;
 

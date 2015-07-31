@@ -4,11 +4,16 @@
         <li id="todo-doing">未完成</li>
         <li id="todo-done">已完成</li>
     </ul>
-    <dl class="todo-inventory-detail">
-      <dt ng-repeat="tasks in taskList">
-        <time ng-bind="tasks.time | date: 'yyyy-MM-dd'"></time>
-      </dt>
-      <dd ng-repeat="tasks in taskList" data-task-id="{{tasks.id}}" ng-bind="tasks.title"></dd>
+    <dl class="todo-inventory-detail" ng-controller="TaskController">
+      <span ng-repeat="tasks in taskList | filter: {taskList: curList.taskList}"
+            ng-controller="CateController">
+        <dt>
+          <time ng-bind="tasks.time | date: 'yyyy-MM-dd'"></time>
+        </dt>
+        <dd data-task-id="{{tasks.id}}"
+            ng-bind="tasks.title"
+            ng-click="changeTaskId(tasks.id)"></dd>
+      </span>
     </dl>
     <a id="todo-add-task" ng-click="addNewTask($event)"><i class="fa fa-plus fa-fw"></i>新增任务</a>
 </section>
