@@ -3,6 +3,7 @@ todo.factory('storageService', function(){
 
   var todoService = {};
 
+  //找到数组中相对应prop值的数组对象
   todoService.getObj = function(arr, prop, val) {
     for (var i = 0, len = arr.length; i < len; i++) {
       if (arr[i][prop] === val) {
@@ -10,6 +11,7 @@ todo.factory('storageService', function(){
       }
     }
   }
+  //获取当前数组中相对应prop值的数组对象的位置
   todoService.getPos = function(key, prop, val) {
     try{
         if (window.localStorage) {
@@ -29,6 +31,8 @@ todo.factory('storageService', function(){
         console.log(e);
     }
   };
+
+  //判断当前数组中是否还有相对应prop值的数组对象
   todoService.isExist = function(key, prop, val) {
     try{
         if (window.localStorage) {
@@ -49,6 +53,16 @@ todo.factory('storageService', function(){
     }
   };
 
+  //重置任务数组中卫任务的id顺序
+  todoService.orderTasks = function(arr) {
+      for (var i = 0, len = arr.length; i < len; i++) {
+        arr[i].id = i;
+      }
+      return arr;
+  }
+
+
+  //初始化测试数据
   todoService.todoData = (function(){
     //创建默认分类、默认列表、默认任务对象
     var defaultCate = {
@@ -76,15 +90,17 @@ todo.factory('storageService', function(){
       time: new Date(2015, 1, 1),
       content: 'For Test !!!',
       isDone: true
-    }
+    };
+
 
     return {
       cates: [defaultCate],
       lists: [defaultList],
-      tasks: [defaultDetail, task1]
+      tasks: todoService.orderTasks([defaultDetail, task1])
     }
   })();
 
+  //从本地获取数据
   todoService.getData = function(key){
     try{
         //监测浏览器是否支持localStorage
@@ -115,6 +131,8 @@ todo.factory('storageService', function(){
     }
   };
 
+
+  //从本地更新数据
   todoService.setData = function(key, val) {
       try{
           if (window.localStorage) {
@@ -136,7 +154,10 @@ todo.factory('storageService', function(){
                       case "tasks":
                           if (!todoService.isExist(key, 'title', val)) {
                             this.todoData.tasks.push(val);
-                            storage.setItem("tasks", JSON.stringify(this.todoData.tasks));
+                            storage.setItem("tasks",
+                                              JSON.stringify(
+                                                todoService.orderTasks(this.todoData.tasks)
+                                              ));
                           }
                           break;
                   }

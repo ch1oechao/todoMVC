@@ -2,22 +2,37 @@
     <form name="taskForm">
         <div class="todo-spec-title">
             <label><i class="fa fa-flag"></i></label>
-            <input type="text" ng-show="editState" placeholder="请在这里输入标题" value="{{curTask.title}}">
+            <!-- 任务标题 -->
+            <input type="text" placeholder="请在这里输入标题" ng-required
+                   ng-show="editState"
+                   ng-model="inputTask.title"
+                   ng-maxlength="30"
+                   ng-change="updateTitle()">
             <span ng-show="viewState" ng-bind="curTask.title"></span>
         <span class="todo-spec-edit">
-            <i class="fa fa-check fa-2x" ng-show="editState"></i>
-            <i class="fa fa-undo fa-2x"  ng-show="editState" ng-click="viewTask($event)"></i>
+            <i class="fa fa-check fa-2x" ng-show="editState" ng-click="updateTask($event)"></i>
+            <i class="fa fa-undo fa-2x"  ng-show="editState" ng-click="undoTask($event)"></i>
             <i class="fa fa-pencil-square-o fa-2x" ng-show="viewState" ng-click="editTask($event)"></i>
             <i class="fa fa-check-square-o fa-2x" ng-show="viewState"></i>
         </span>
         </div>
         <div class="todo-spec-time">
             <label><i class="fa fa-calendar"></i></label>
-            <input ng-show="editState" type="date" value="{{curTask.time | date: 'yyyy-MM-dd'}}">
+            <!-- 任务时间 -->
+            <input type="date" ng-required
+                   ng-show="editState"
+                   ng-model="inputTask.time"
+                   min="2015-01-01"
+                   ng-change="updateTime()">
             <span ng-show="viewState" ng-bind="curTask.time | date: 'yyyy-MM-dd'"></span>
         </div>
         <div class="todo-spec-content">
-            <textarea ng-show="editState" placeholder="在这里输入内容" ng-bind="curTask.content"></textarea>
+            <!-- 任务内容 -->
+            <textarea placeholder="在这里输入内容" ng-required
+                      ng-show="editState"
+                      ng-model="inputTask.content"
+                      ng-maxlength="500"
+                      ng-change="updateContent()"></textarea>
             <p ng-show="viewState" ng-bind="curTask.content"></p>
         </div>
     </form>
