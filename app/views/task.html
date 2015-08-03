@@ -11,7 +11,6 @@
             <span ng-show="viewState" ng-bind="curTask.title"></span>
         <span class="todo-spec-edit">
             <i class="fa fa-check fa-2x" ng-show="editState" ng-click="updateTask($event)"></i>
-            <i class="fa fa-undo fa-2x"  ng-show="editState" ng-click="undoTask($event)"></i>
             <i class="fa fa-pencil-square-o fa-2x" ng-show="viewState" ng-click="editTask($event)"></i>
             <i class="fa fa-check-square-o fa-2x" ng-show="viewState"></i>
         </span>

@@ -22,18 +22,27 @@ todo.controller('TaskController', ['$scope', 'storageService', function($scope, 
       $scope.inputTask = $scope.curTask;
       //TODO 将显示数据转为表单数据
     }
-    //重置任务
-    $scope.undoTask = function() {
-      $scope.editState = false;
-      $scope.viewState = true;
-      //TODO 还原数据
-    }
     //更新任务
     $scope.updateTask = function() {
       $scope.editState = false;
       $scope.viewState = true;
       //TODO 更新本地数据
+      if (!!$scope.curTask.id) {
+        //修改任务
+        var pos = storageService.getPos('tasks', 'id', $scope.curTask);
+        storageService.setData('tasks', $scope.taskList[pos]);
+      } else {
+        //新建任务
+        $scope.inputTask.category = $scope.curList.category;
+        $scope.inputTask.taskList = $scope.curList.taskList;
+        $scope.inputTask.isDone = false;
+        $scope.inputTask.id = storageService.getData('tasks').length;
+        //存入本地
+        storageService.setData('tasks', $scope.inputTask);
+        $scope.curTask = $scope.inputTask;
 
+        $scope.taskList = storageService.getData("tasks");
+      }
     }
 
 }]);

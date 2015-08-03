@@ -141,24 +141,28 @@ todo.factory('storageService', function(){
                   switch (key) {
                       case "cates":
                           if (!todoService.isExist(key, 'category', val)) {
-                            this.todoData.cates.push(val);
-                            storage.setItem("cates", JSON.stringify(this.todoData.cates));
+                            var cates = todoService.getData('cates')
+                            cates.push(val);
+                            storage.setItem("cates", JSON.stringify(cates));
                           }
                           break;
                       case "lists":
                           if (!todoService.isExist(key, 'taskList', val)) {
-                            this.todoData.lists.push(val);
-                            storage.setItem("lists", JSON.stringify(this.todoData.lists));
+                            var lists = todoService.getData('lists');
+                            lists.push(val);
+                            storage.setItem("lists", JSON.stringify(lists));
                           }
                           break;
                       case "tasks":
-                          if (!todoService.isExist(key, 'title', val)) {
-                            this.todoData.tasks.push(val);
-                            storage.setItem("tasks",
-                                              JSON.stringify(
-                                                todoService.orderTasks(this.todoData.tasks)
-                                              ));
+                          var tasks = todoService.getData('tasks');
+                          if (todoService.isExist(key, 'id', val)) {
+                            var pos = todoService.getPos(key, 'id', val);
+                            tasks.splice(pos, 1, val);
+                          } else {
+                            tasks.push(val);
                           }
+                          todoService.orderTasks(tasks);
+                          storage.setItem("tasks", JSON.stringify(tasks));
                           break;
                   }
               }
@@ -168,16 +172,7 @@ todo.factory('storageService', function(){
           console.log(e);
       }
   };
-  //
-  // todoService.updateData = function(cates, lists, tasks) {
-  //     //更新本地分类数据
-  //     todoService.setData("cates", cates);
-  //     //更新本地列表数据
-  //     todoService.setData("lists", lists);
-  //     //更新本地任务数据
-  //     todoService.setData("tasks", tasks);
-  // };
-
+  
   return todoService;
 
 });

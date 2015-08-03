@@ -12,10 +12,17 @@ todo.controller('ListController', ['$scope', 'storageService',function($scope, s
 
     //添加新任务
     $scope.addNewTask = function() {
-      $scope.editState = true;
-      $scope.viewState = false;
+
       //任务内容置空
-      $scope.curTask = {};
+      if (confirm("确认在 ["
+                  + $scope.curList.category + "] 分类的 ["
+                  + $scope.curList.taskList + "] 列表下建立任务吗?")) {
+          //TODO 新建任务
+          // console.log("新建任务啦");
+          $scope.editState = true;
+          $scope.viewState = false;
+          $scope.curTask = {};
+      }
     }
     //改变当前任务id
     $scope.changeTaskId = function(id) {
@@ -23,5 +30,7 @@ todo.controller('ListController', ['$scope', 'storageService',function($scope, s
       $scope.curTask = $scope.taskList[id];
       $scope.curTask.time = new Date($scope.curTask.time);
     };
+
+    $scope.$watch($scope.taskList, $scope.updateTask);
 
 }]);

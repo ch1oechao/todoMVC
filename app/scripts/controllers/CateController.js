@@ -107,7 +107,7 @@ todo.controller('CateController', ['$scope', 'storageService', function($scope, 
       $scope.curList = storageService.getObj($scope.listList, 'taskList', this.$$watchers[0].last);
       var listPos = storageService.getPos('lists', 'taskList', $scope.curList);
 
-      console.log("已选中", $scope.curList, listPos);
+      // console.log("已选中", $scope.curList, listPos);
       //TODO 刷新列表视图
     }
 

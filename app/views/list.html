@@ -5,14 +5,13 @@
         <li id="todo-done">已完成</li>
     </ul>
     <dl class="todo-inventory-detail" ng-controller="TaskController">
-      <span ng-repeat="tasks in taskList | filter: {taskList: curList.taskList}"
+      <span ng-repeat="tasks in taskList | filter: {taskList: curList.taskList} | orderBy: time"
             ng-controller="CateController">
         <dt>
-          <time ng-bind="tasks.time | date: 'yyyy-MM-dd'"></time>
+          <time ng-model="tasks.time">{{tasks.time | date: 'yyyy-MM-dd'}}</time>
         </dt>
-        <dd data-task-id="{{tasks.id}}"
-            ng-bind="tasks.title"
-            ng-click="changeTaskId(tasks.id)"></dd>
+        <dd ng-model="tasks.title"
+            ng-click="changeTaskId(tasks.id)">{{tasks.title}}</dd>
       </span>
     </dl>
     <a id="todo-add-task" ng-click="addNewTask($event)"><i class="fa fa-plus fa-fw"></i>新增任务</a>
